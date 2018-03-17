@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>StressMap - Live Stream</title>
+      <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+      <link rel="stylesheet" href="css/vendor.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.18.0/mapbox-gl.css">
+      <link rel="stylesheet" href="css/app.css">
+   </head>
+   <body>
+      <div id="map">
+         <!-- Visualisation Logo -->
+         <img class="logo" src="images/sensilab_stressmap_logo.svg" height="55px">
+         <!-- Visualisation Controls -->
+         <div id="vis-controls">
+            <div class="toggle-switch">
+               <p>Live Feed</p>
+               <input id="live-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" checked>
+               <label for="live-toggle"></label>
+            </div>
+            <div class="toggle-switch">
+               <p>Enable Timeline</p>
+               <input id="timeline-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+               <label for="timeline-toggle"></label>
+            </div>
+         </div>
+         <!-- Visualisation Timeline -->
+         <div id="timeline">
+            <div class="slider"></div>
+         </div>
+         <!-- Mapbox watermark -->
+         <a href="http://mapbox.com/about/maps" class="mapbox-maplogo" target="_blank">Mapbox</a>
+      </div>
+      <script src="js/vendor.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+      <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.18.0/mapbox-gl.js'></script>
+      <script src="js/app.js"></script>
+   </body>
+</html>

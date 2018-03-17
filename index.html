@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Stress Pendant | Sensilab</title>
+      <link rel="shortcut icon" type="image/x-icon" href="dist/img/icon.jpg" />
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+      <!--
+        CSS files:
+        - Bootstrap
+        - Bootstrap select
+        - Fontawesome
+        - AdminLTE
+        - Loading css
+        - jQuery
+        -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="dist/css/styles.css" />
+      <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+      <link rel="stylesheet" href="dist/css/skin-green.min.css">
+      <link rel="stylesheet" href="dist/css/jquery-ui.min.css">
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   </head>
+
+   <body class="hold-transition skin-green fixed login-page">
+      
+      <div class="loading" style="display:none;">Loading&#8230;</div>
+
+      <div class="login-box" id="login-container">
+         <div class="login-logo">
+            <a href="http://sensilab.monash.edu/">
+            <img src="dist/img/sensilablogo.png" />
+            </a>
+         </div>
+         
+         <!-- The following is used to show a login UI when the user is not logged in -->
+         <div class="login-box-body">
+            <p class="login-box-msg">Sign in to Stress Pendant</p>
+            <form autocomplete="off">
+               <div class="form-group has-feedback">
+                  <input type="email" class="form-control" id="form-login-username" name="username" placeholder="Email">
+                  <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+               </div>
+               <div class="form-group has-feedback">
+                  <input id="form-login-password" type="password" name="password" class="form-control" placeholder="Password">
+                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+               </div>
+               <div class="error" id="login-error" style="display:none;color:red;">
+                  <p></p>
+               </div>
+               <div class="row">
+                  <div class="col-xs-4 col-xs-offset-8">
+                     <button type="submit" class="btn btn-primary btn-block btn-flat" id="login-button">Sign In</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+
+      <!-- This is the main dashboard. It is only shown when the user is logged in. -->
+      <span id="content" style="display:none;">
+         <div class="wrapper">
+            <header class="main-header">
+               <span class="logo">
+                  <span class="logo-mini"><a href="http://sensilab.monash.edu/"><img src="dist/img/sensilab.png" /></a></span>
+                  <span class="logo-lg"><a href="http://sensilab.monash.edu/"><img src="dist/img/sensilab.png" /></a></span>
+               </span>
+               <nav class="navbar navbar-static-top" role="navigation">
+                  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                  <span class="sr-only">Toggle navigation</span>
+                  </a>
+                  <div class="navbar-custom-menu">
+                     <ul class="nav navbar-nav">
+                        <li>
+                           <a href="" data-toggle="control-sidebar" onclick="logout();"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </header>
+            <aside class="main-sidebar">
+               <section class="sidebar">
+                  <ul class="sidebar-menu">
+                     <li><a href="http://sensilab.monash.edu/pendant-map/"><i class="fa fa-link"></i> <span>Heatmap</span></a></li>
+                     <li><a href="http://sensilab.monash.edu/project/stress-pendant/"><i class="fa fa-link"></i> <span>The Experiment</span></a></li>
+                     <li><a href="http://sensilab.monash.edu/team/"><i class="fa fa-link"></i> <span>The Team</span></a></li>
+                  </ul>
+               </section>
+            </aside>
+            <div class="content-wrapper">
+               <section class="content-header">
+                  <h1>
+                     Stress Pendant
+                     <small>Dashboard</small>
+                  </h1>
+               </section>
+               <!-- Main content -->
+               <section class="content">
+                  <div class="row">
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                           <span class="info-box-icon bg-aqua"><i class="fa fa-info" aria-hidden="true"></i></span>
+                           <div class="info-box-content">
+                              <span class="info-box-text">Total Stress Events</span>
+                              <span id="numOfEvents" class="info-box-number">102</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                           <span class="info-box-icon bg-green"><i class="fa fa-arrows-h" aria-hidden="true"></i></span>
+                           <div class="info-box-content">
+                              <span class="info-box-text">Avg stress per person</span>
+                              <span id="avgStress" class="info-box-number">15 events</span>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- fix for small devices only -->
+                     <div class="clearfix visible-sm-block"></div>
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                           <span class="info-box-icon bg-red"><i class="fa fa-fire" aria-hidden="true"></i></span>
+                           <div class="info-box-content">
+                              <span class="info-box-text">Most stress occurs at</span>
+                              <span id="tempRange" class="info-box-number">23&deg;C - 36&deg;C</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                           <span class="info-box-icon bg-yellow"><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+                           <div class="info-box-content">
+                              <span class="info-box-text">Recent stress events</span>
+                              <span class="sparkline"> </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" id="stressChartBox">
+                     <div class="col-md-12">
+                        <div class="box">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Stress Line Report</h3>
+                              <div class="box-tools pull-right">
+                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                 </button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                           </div>
+                           <div class="box-body" style="display: block;">
+                              <div class="row">
+                                 <div class="col-md-8">
+                                    <div class="chart">
+                                       <canvas id="stressChart" style="height: 400px; width: 480px;" height="105" width="480"></canvas>
+                                    </div>
+                                    <p class="pull-left">
+                                       <strong>X axis: Time</strong>
+                                       <br>
+                                       <strong>Y axis: Number of stress events </strong>
+                                    </p>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <table class="table">
+                                       <tr>
+                                          <td>
+                                             <b>Time selection: </b>
+                                          </td>
+                                          <td>
+                                             <div class="form-group">
+                                                <select class="selectpicker time" id="sel1" >
+                                                   <optgroup>
+                                                      <option id="hour">Hour</option>
+                                                      <option id="day">Day</option>
+                                                      <option id="month">Month</option>
+                                                   </optgroup>
+                                                </select>
+                                             </div>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Over last time block? </b>
+                                          </td>
+                                          <td>
+                                             <div class="radio">
+                                                <label><input id="yesLastBlock" type="radio" name="optradioTimeBlock">Yes</label>
+                                             </div>
+                                             <div class="radio">
+                                                <label><input id="noLastBlock" type="radio" name="optradioTimeBlock" checked>No</label>
+                                             </div>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Dataset one:</b> <div class="square yellow"></div></td>
+                                          <td>
+                                             <select class="selectpicker ds1" multiple>
+                                                
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Dataset two:</b> <div class="square blue"></div></td>
+                                          <td>
+                                             <select class="selectpicker ds2" multiple>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Cumulative?</b>
+                                          </td>
+                                          <td>
+                                             <div class="radio">
+                                                <label><input id="yesCumulative" type="radio" name="optradioCumulative">Yes</label>
+                                             </div>
+                                             <div class="radio">
+                                                <label><input id="noCumulative" type="radio" name="optradioCumulative" checked>No</label>
+                                             </div>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="box">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Stress Scatter Report</h3>
+                              <div class="box-tools pull-right">
+                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                 </button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                           </div>
+                           <div class="box-body" style="display: block;">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div id="scatterChart"></div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <table class="table">
+                                       <tr>
+                                          <td>
+                                             <b>X axis: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker x_axis_scatter">
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Y axis: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker y_axis_scatter">
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Z axis: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker z_axis_scatter" multiple>
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Colour by: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker colour_scatter">
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Filter by:</b></td>
+                                          <td>
+                                             <select class="selectpicker filter_scatter" multiple>
+                                                
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><label for="amount">Temperature range (leave to edges for whole set):</label></td>
+                                          <td>
+                                             <p>
+                                                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                             </p>
+                                             <div id="temp-slider-range"></div>
+                                             <input type="hidden" id="tempMax">
+                                             <input type="hidden" id="tempMin">
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td> <b>Time selection: </b></td>
+                                          <td>
+                                             <table>
+                                                <tr>
+                                                   <td>
+                                                      <label for="from">From: </label>
+                                                   </td>
+                                                   <td>
+                                                      <input type="text" id="from" name="from" class="form-control">
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td>
+                                                      <label for="to">To: </label>
+                                                   </td>
+                                                   <td>
+                                                      <input type="text" id="to" name="to" class="form-control">
+                                                   </td>
+                                                </tr>
+                                             </table>
+                                             <br>
+                                             <button type="button" class="btn btn-sm pull-right" onclick="setMaxDateRange('#to', '#from');">
+                                             Whole dataset
+                                             </button>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="row">
+                        <div class="col-md-12">
+                        <div class="box">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Demographics</h3>
+                              <div class="box-tools pull-right">
+                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                 </button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                           </div>
+                           <div class="box-body" style="display: block;">
+                              <div class="row">
+                                 <div class="col-md-8">
+                                    <div class="pie">
+                                       <canvas id="pieChart" height="160" width="650"></canvas>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <ul id="pieLegend" class="chart-legend clearfix">
+                                    </ul>
+                                 </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                 <div class="col-md-4 col-md-offset-7">
+                                    <table class="table">
+                                       <tr>
+                                          <td>
+                                             <select style="display:block" multiple class="selectpicker variables">
+                                                <optgroup label="Variable" data-max-options="2">
+                                                   <option selected>Gender</option>
+                                                   <option selected>Age</option>
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                              </div>
+                              </div>
+                           </div>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-12">
+                        <div class="box">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Stress Area Report</h3>
+                              <div class="box-tools pull-right">
+                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                 </button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                           </div>
+
+                           <div class="box-body" >
+                                <div class="row">
+                                <div class="col-md-12">
+                              <div id="areaChart" style="height: 300px; width: 100%;">
+                              </div>
+                              </div>
+                              </div>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <table class="table">
+                                       <tr>
+                                          <td>
+                                             <b>X axis: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker x_axis_area">
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Graph type: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker graph_type_area">
+                                                <optgroup data-max-options="1">
+                                                   <option value="area">Area</option>
+                                                   <option value="stackedColumn">Histogram</option>
+                                                </optgroup> 
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Interval size:</b></td>
+                                          <td>
+                                             <div id="interval_area">
+                                             </div>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Bin size:</b></td>
+                                          <td>
+                                             <div id="bin_area">
+                                             </div>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <b>Colour by: </b>
+                                          </td>
+                                          <td>
+                                             <select class="selectpicker colour_area">
+                                                <optgroup data-max-options="1">
+                                                   
+                                                </optgroup>
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td><b>Filter by:</b></td>
+                                          <td>
+                                             <select class="selectpicker filter_area" multiple>
+                                                
+                                             </select>
+                                          </td>
+                                       </tr>
+                                       
+                                       <tr>
+                                          <td> <b>Time selection: </b></td>
+                                          <td>
+                                             <table>
+                                                <tr>
+                                                   <td>
+                                                      <label for="from_area">From: </label>
+                                                   </td>
+                                                   <td>
+                                                      <input type="text" id="from_area" name="from_area" class="form-control">
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td>
+                                                      <label for="to_area">To: </label>
+                                                   </td>
+                                                   <td>
+                                                      <input type="text" id="to_area" name="to_area" class="form-control">
+                                                   </td>
+                                                </tr>
+                                             </table>
+                                             <br>
+                                             <button type="button" class="btn btn-sm pull-right" onclick="setMaxDateRange('#to_area', '#from_area');">
+                                             Whole dataset
+                                             </button>
+                                          </td>
+                                       </tr>
+                                    </table>
+                              </div>
+                              </div>
+                           </div>
+                        </div>
+                        </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row" id="stressMap">
+                     <div class="col-md-12">
+                        <div class="box">
+                           <div class="box-header with-border">
+                              <h3 class="box-title">Stress Map</h3>
+                              <div class="box-tools pull-right">
+                                 <button type="button" class="btn btn-box-tool" onclick="resizeiFrameFullScreen();"><i class="fa fa-arrows-alt"></i></button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                           </div>
+                           <div class="box-body" style="display: block;">
+                              <div id="heatmap" class="embed-responsive embed-responsive-16by9">
+                                 <iframe id="frame_heatmap" src="heatmap/index.html" allowfullscreen class="embed-responsive-item" frameborder="0" scrolling="no">
+                                    <p>Your browser does not support iframes.</p>
+                                 </iframe>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <footer class="main-footer">
+               <div class="pull-right hidden-xs">
+                  Apoorv Kansal
+               </div>
+               <strong>Copyright &copy; 2016 <a href="http://sensilab.monash.edu/">sensiLab</a>.</strong> All rights reserved.
+            </footer>
+         </div>
+      </span>
+        <!--
+        Javascript files:
+        - jQuery
+        - Sparkline
+        - Bootstrap
+        - plot.ly
+        - Chart.js
+        - Firebase
+        - lodash
+        - CanvasJS
+        - AdminLTE (app.min.js)
+        - Slimscroll
+        - Dashboard
+        - Main
+        - Bootstrap select
+        - jQuery UI
+        -->
+      <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+      <script src="dist/js/jquery.sparkline.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+      <script src="https://cdn.jsdelivr.net/lodash/4.16.3/lodash.min.js"></script>
+      <script src="dist/js/jquery.canvasjs.min.js"></script>
+      <script src="dist/js/app.min.js"></script>
+      <script src="dist/js/jquery.slimscroll.min.js"></script>
+      <script src="dist/js/dashboard.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+      <script src="dist/js/main.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   </body>
+
+</html>
