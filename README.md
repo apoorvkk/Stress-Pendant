@@ -8,8 +8,10 @@ pendant then captured time, temperature, accelerometer data and more variables a
 a paired mobile phone via Bluetooth. The mobile phone showed personal data about the participant's stress
 history and also relayed the captured data to Google’s Firebase server for data collection and analysis.
 My task was to produce a web-based app that shows various data visualizations of
-stress data collected. Having a variety of different visualizations of the stress data allowed researches to analyse 
+stress data collected. Having a variety of different visualizations of the stress data allowed researches to analyse
 stress more effectively.
+
+![overview](images/overview.png)
 
 There were various technological aspects to this project. The task required researchers to focus on
 producing the relevant hardware for the stress pendant and assembling the sensors. This also required a
@@ -30,6 +32,8 @@ Here are some images of the final project:
 
 ![stress image 1](images/stress_1.png)
 ![stress image 2](images/stress_2.png)
+![stress image 3](images/stress_3.png)
 
 For more information, please see https://sensilab.monash.edu/research/stress-pendant/
+
 Dashboard link (requires Sensilab authorization): http://sensilab.monash.edu/pendant-dashboard
